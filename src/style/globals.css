@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+* {
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-estedad);
+  outline: none;
+}
+
+@layer base {
+  :root {
+    --background-app: #1e293b;
+    --background-title: #334155;
+    --color-primary: #c1cad6;
+    --color-secondary: #465468;
+    --color-texts: #cbd5e1;
+    --color-border: #616978;
+    --color-h2: #94a3b8;
+    --color-red: #f87171;
+    --color-btn: #64748b;
+    --color-quantity: #94a2b4;
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-success: #677d6a;
+  }
+}
+
+@layer components {
+  .inputs {
+    @apply bg-transparent border p-2 rounded-lg;
+  }
+
+  .label {
+    @apply flex justify-between text-border text-xl;
+  }
+}
