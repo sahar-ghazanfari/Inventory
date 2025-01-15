@@ -9,6 +9,7 @@ type NewProductProps = {
   setNewCategory: React.Dispatch<React.SetStateAction<string>>;
   handleAddCategory: (e: React.FormEvent) => void;
   handleAddProduct: (product: {
+    id: string;
     title: string;
     quantity: number;
     category: string;
@@ -35,7 +36,9 @@ function NewProduct({
   const handleSubmitProduct = (e: React.FormEvent) => {
     e.preventDefault();
     if (productTitle && quantity > 0 && selectedCategory) {
+      const productId = `${Date.now()}`;
       handleAddProduct({
+        id: productId,
         title: productTitle,
         quantity,
         category: selectedCategory,

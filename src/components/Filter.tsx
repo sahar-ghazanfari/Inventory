@@ -1,15 +1,18 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import ProductList from "./ProductList";
 
+type Product = {
+  id: string;
+  title: string;
+  quantity: number;
+  category: string;
+};
+
 type FilterProps = {
   categories: string[];
-  setFilteredProducts: React.Dispatch<
-    React.SetStateAction<
-      { title: string; quantity: number; category: string }[]
-    >
-  >;
-  products: { title: string; quantity: number; category: string }[];
+  setFilteredProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+  products: Product[];
 };
 
 function Filter({ categories, setFilteredProducts, products }: FilterProps) {
@@ -17,11 +20,11 @@ function Filter({ categories, setFilteredProducts, products }: FilterProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [sortOption, setSortOption] = useState<string>("all");
   const [localFilteredProducts, setLocalFilteredProducts] =
-    useState<{ title: string; quantity: number; category: string }[]>(products);
+    useState<Product[]>(products);
 
   useEffect(() => {
     const filterProducts = () => {
-      let filtered = products;
+      let filtered = [...products];
 
       if (searchTerm) {
         filtered = filtered.filter((product) =>
@@ -47,6 +50,15 @@ function Filter({ categories, setFilteredProducts, products }: FilterProps) {
 
     filterProducts();
   }, [searchTerm, selectedCategory, sortOption, products, setFilteredProducts]);
+
+  // تابع مدیریت حذف محصول
+  const handleDeleteProduct = (id: string) => {
+    const updatedProducts = localFilteredProducts.filter(
+      (product) => product.id !== id
+    );
+    setLocalFilteredProducts(updatedProducts);
+    setFilteredProducts(updatedProducts);
+  };
 
   return (
     <div className="w-3/4 mt-10">
@@ -105,7 +117,10 @@ function Filter({ categories, setFilteredProducts, products }: FilterProps) {
         </div>
       </div>
       <div className="hidden lg:block mt-6">
-        <ProductList products={localFilteredProducts} />
+        <ProductList
+          products={localFilteredProducts}
+          handleDeleteProduct={handleDeleteProduct}
+        />
       </div>
     </div>
   );

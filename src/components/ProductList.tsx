@@ -1,10 +1,18 @@
-import React from "react";
+import { RiDeleteBinLine } from "react-icons/ri";
 
-type ProductListProps = {
-  products: { title: string; quantity: number; category: string }[];
+type Product = {
+  id: string;
+  title: string;
+  quantity: number;
+  category: string;
 };
 
-function ProductList({ products = [] }: ProductListProps) {
+type ProductListProps = {
+  products: Product[];
+  handleDeleteProduct: (id: string) => void;
+};
+
+function ProductList({ products = [], handleDeleteProduct }: ProductListProps) {
   return (
     <div className="w-3/4 lg:w-full">
       <h2 className="label font-bold">Product List</h2>
@@ -21,9 +29,14 @@ function ProductList({ products = [] }: ProductListProps) {
                 key={index}
                 className="bg-white h-fit p-4 rounded-lg shadow-lg hover:shadow-2xl transition-all"
               >
-                <h3 className="text-xl font-semibold text-titleH2">
-                  {product.title}
-                </h3>
+                <div className="flex justify-between">
+                  <h3 className="text-xl font-semibold text-titleH2">
+                    {product.title}
+                  </h3>
+                  <button onClick={() => handleDeleteProduct(product.id)}>
+                    <RiDeleteBinLine color="red" />
+                  </button>
+                </div>
                 <p className="text-lg text-gray-600 mt-2">
                   {product.quantity.toLocaleString()}
                   <span className="font-medium">Toman</span>
